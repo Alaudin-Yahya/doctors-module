@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-project",
-    "slug": "my-new-project",
+    "name": "FYP_Project",
+    "slug": "FYP",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
