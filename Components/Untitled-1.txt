@@ -1,0 +1,110 @@
+<?php
+
+
+session_start();
+require "connect.php";
+
+
+
+if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+   
+ throw new Exception('Request method must be POST!');
+
+}
+
+ 
+
+//Make sure that the content type of the POST request has been set to application/json
+
+
+$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+
+if(strcasecmp($contentType, 'application/json') != 0){
+  
+  throw new Exception('Content type must be: application/json');
+
+}
+
+
+ 
+//Receive the RAW post data.
+
+
+$content = trim(file_get_contents("php://input"));
+
+
+
+//Attempt to decode the incoming RAW post data from JSON.
+
+$decoded = json_decode($content, true);
+ 
+
+
+//If json_decode failed, the JSON is invalid.
+
+if(!is_array($decoded)){
+    
+ throw new Exception('Received content contained invalid JSON!');
+
+}
+
+
+
+
+$email=$decoded["email"];
+
+
+
+
+$sql = "SELECT doctor_email FROM doctor_registration WHERE doctor_email ='$email'
+";
+
+
+$result = $conn->query($sql);
+
+
+$rows = array();
+
+while($row = mysqli_fetch_array($result))
+
+{
+  
+  $rows= $row;
+
+
+}
+
+
+$headers = "From: HealthApp@gmail.com";
+    
+$num = rand(000000,999999);
+
+
+if (mysqli_num_rows($result)>0)
+{
+  
+   mail($email,"Confirm Account",$num." "."is your Password Reset code",$headers);
+    
+     echo 1;
+
+   $sql = "INSERT INTO temp_verify (doctor_email,auth_code, authenticated) values ('$email',$num, 0)";
+
+     if ($conn->query($sql)===TRUE)
+	{
+
+	 echo 1;
+
+        
+}
+    
+     else echo 'error';
+        
+
+
+}
+
+else echo "Incorrect email";
+
+
+?>

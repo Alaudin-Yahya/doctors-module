@@ -1,0 +1,111 @@
+<KeyboardAvoidingView behavior="position">
+            <View style={styles.container}>
+              <Text
+                style={{ fontWeight: "bold", fontSize: 40, color: "#00b5ec" }}
+              >
+                Verify Email
+              </Text>
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <Icon name="envelope" type="font-awesome" color="#00b5ec" />
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Email"
+                    keyboardType="email-address"
+                    underlineColorAndroid="transparent"
+                    onChangeText={email => this.setState({ email })}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => {
+                      this.secondTextInput.focus();
+                    }}
+                  />
+                </View>
+                <TouchableHighlight
+                  underlayColor="#00b5ec"
+                  style={[styles.buttonContainer, styles.forgetpassButton]}
+                  onPress={this.handleVerify}
+                >
+                  <Text style={styles.forgetpassText}>Verify</Text>
+                </TouchableHighlight>
+                {/* <Text>{"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"}</Text> */}
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        }
+        {this.state.responseForEmail === 1 && (
+          <KeyboardAvoidingView behavior="position">
+            <View style={styles.container}>
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <Icon name="map-marker" type="font-awesome" color="#00b5ec" />
+
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Authentication Code"
+                    underlineColorAndroid="transparent"
+                    onChangeText={auth_code => this.setState({ auth_code })}
+                  />
+                </View>
+                <TouchableHighlight
+                  style={[styles.buttonContainer, styles.forgetpassButton]}
+                  underlayColor="#00b5ec"
+                  onPress={this.confirmCode}
+                >
+                  <Text style={styles.forgetpassText}>Confirm code</Text>
+                </TouchableHighlight>
+                {/* <Text>{"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"}</Text> */}
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        )}
+
+        {
+          <KeyboardAvoidingView behavior="position">
+            <View style={styles.container}>
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <Icon name="lock" type="font-awesome" color="#00b5ec" />
+
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Enter New Password"
+                    secureTextEntry={true}
+                    underlineColorAndroid="transparent"
+                    onChangeText={password => this.setState({ password })}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => {
+                      this.secondTextInput.focus();
+                    }}
+                  />
+                </View>
+                <View style={styles.inputContainer}>
+                  <Icon name="lock" type="font-awesome" color="#00b5ec" />
+
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Re-enter New Password"
+                    secureTextEntry={true}
+                    underlineColorAndroid="transparent"
+                    onChangeText={c_password => this.setState({ c_password })}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.secondTextInput = input;
+                    }}
+                  />
+                </View>
+
+                <TouchableHighlight
+                  style={[styles.buttonContainer, styles.forgetpassButton]}
+                  underlayColor="#00b5ec"
+                  onPress={() => this.UpdatePass()}
+                >
+                  <Text style={styles.forgetpassText}>Update Password</Text>
+                </TouchableHighlight>
+                {/* <Text>{"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"}</Text> */}
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        }
+        {this.state.res2 === "true"
+          ? this.props.navigation.navigate("login")
+          : false}
