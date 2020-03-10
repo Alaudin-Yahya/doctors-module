@@ -20,7 +20,8 @@ import ValidationComponent from "react-native-form-validator";
 class ConfirmPasswordCode extends Component {
   state = {
     auth_code: 0,
-    response: "10"
+    response: "10",
+    email : this.props.navigation.getParam('email')
   };
   confirmCode = e => {
     fetch(
@@ -31,7 +32,7 @@ class ConfirmPasswordCode extends Component {
         // body:  JSON.stringify(data)
         body: JSON.stringify({
           auth_code: this.state.auth_code,
-          email: this.props.email
+          email: this.state.email
           // location: this.state.location
         })
       }
@@ -42,9 +43,11 @@ class ConfirmPasswordCode extends Component {
           response: data
         })
       )
-      .then(console.log(this.state.response));
+      .then(console.log(this.props.navigation.getParam('email')+this.state.response));
   };
   render() {
+    console.log("in ConfirmPAsswordCode")
+    
     return (
       <View>
         {(this.state.response === "0" || this.state.response === "10") && (
@@ -75,7 +78,10 @@ class ConfirmPasswordCode extends Component {
           </KeyboardAvoidingView>
         )}
         {this.state.response === "1" && (
-          <NewPassword email={this.props.email} />
+          // <NewPassword email={this.props.email} />
+          this.props.navigation.navigate('NewPassword', {
+            email: this.state.email 
+          })
         )}
       </View>
     );

@@ -17,7 +17,9 @@ import EditProfile from "./Components/EditProfile";
 import ChangePassword from "./Components/ChangePassword";
 import VerifyPassword from "./Components/VerifyPassword";
 import QRScanner from "./Components/QRCodeScanner";
-
+import VerifyEmail from './Components/VerifyEmail';
+import ConfirmPasswordCode from './Components/ConfirmPasswordCode';
+import NewPassword from './Components/NewPassword';
 class HelloWorldApp extends Component {
   state = {};
   render() {
@@ -58,6 +60,7 @@ class HelloWorldApp extends Component {
     );
   }
 }
+console.disableYellowBox = true;
 
 export default createStackNavigator({
   home: HelloWorldApp,
@@ -68,7 +71,10 @@ export default createStackNavigator({
   EditProfile: EditProfile,
   ChangePassword: ChangePassword,
   VerifyPassword: VerifyPassword,
-  QRScanner: QRScanner
+  QRScanner: QRScanner,
+  VerifyEmail: VerifyEmail,
+  ConfirmPasswordCode: ConfirmPasswordCode,
+  NewPassword: NewPassword
 });
 const styles = StyleSheet.create({
   color: {

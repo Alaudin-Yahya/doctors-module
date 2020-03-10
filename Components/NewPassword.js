@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Icon } from "react-native-elements";
 import Login from "./DrLogin";
+import { createStackNavigator } from "react-navigation";
 
 import {
   StyleSheet,
@@ -20,7 +21,8 @@ class NewPassword extends ValidationComponent {
   state = {
     password: "",
     c_password: "",
-    response: ""
+    response: "", 
+    email: this.props.navigation.getParam('email')
   };
   UpdatePass = e => {
     var validatePassword = this.validate({
@@ -40,7 +42,7 @@ class NewPassword extends ValidationComponent {
             headers: { "Content-Type": "application/json" },
             // body:  JSON.stringify(data)
             body: JSON.stringify({
-              email: this.props.email,
+              email: this.state.email,
               password: this.state.password
             })
           }
@@ -60,6 +62,8 @@ class NewPassword extends ValidationComponent {
     }
   };
   render() {
+    console.log("in NewPAssword"+ this.state.email)
+    
     return (
       <KeyboardAvoidingView>
         {(this.state.response === "" ||
@@ -110,11 +114,22 @@ class NewPassword extends ValidationComponent {
             </View>
           </KeyboardAvoidingView>
         )}
-        {this.state.response === "Password Updated" && <Login />}
+        {this.state.response === "Password Updated" && 
+        this.props.navigation.navigate('login', {
+          // data: data 
+        })}
       </KeyboardAvoidingView>
     );
   }
 }
+
+// export default createStackNavigator({
+//   // home: ScannerScreen,
+//   Login: Login 
+//   login: DrLogin,
+//   signup: DrSignup,
+//   profile: DrProfile
+// });
 
 const styles = StyleSheet.create({
   responseText: {
@@ -177,5 +192,4 @@ const styles = StyleSheet.create({
     color: "#ffffff"
   }
 });
-
 export default NewPassword;

@@ -166,9 +166,25 @@ class ForgetPassword extends ValidationComponent {
                 var { x, y, width, height } = event.nativeEvent.layout;
               }} */
   render() {
-    return <View>{!this.state.responseForEmail && <VerifyEmail />}</View>;
+    console.log("in ForgetPassword")
+    return <View>{!this.state.responseForEmail && 
+                // <VerifyEmail />
+                this.props.navigation.navigate('VerifyEmail', {
+                  // data: data 
+                })}
+                
+
+          </View>;
   }
 }
+// export default createStackNavigator({
+//   // home: ScannerScreen,
+//   Login: Login, 
+//   login: DrLogin,
+//   signup: DrSignup,
+//   profile: DrProfile
+// });
+
 export default ForgetPassword;
 
 const styles = StyleSheet.create({

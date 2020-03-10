@@ -58,6 +58,7 @@ class VerifyEmail extends ValidationComponent {
   };
 
   render() {
+    console.log("in Verify mail")
     return (
       <View>
         {this.state.responseForEmail === "0" && (
@@ -99,7 +100,11 @@ class VerifyEmail extends ValidationComponent {
           </KeyboardAvoidingView>
         )}
         {this.state.responseForEmail === "1" && (
-          <ConfirmPasswordCode email={this.state.email} />
+          // <ConfirmPasswordCode email={this.state.email} />
+          this.props.navigation.navigate('ConfirmPasswordCode', {
+            // data: data 
+            email:this.state.email
+          })
         )}
       </View>
     );
