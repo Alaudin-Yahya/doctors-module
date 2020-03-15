@@ -15,16 +15,33 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       ProfileData: {},
-      email: "",
+      email: this.props.navigation.state.params.email,
       password: "",
       result: [],
       authenticated: true,
       name: "David",
-      speciality: "heart"
+      response:[]
     };
   }
+  componentDidMount(){
+    fetch("http://instrux.live/doctors_module/api/profile.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body:  JSON.stringify(data)
+      body: JSON.stringify({
+        email: this.state.email,
+      })
+    })
+      .then(response => response.json())
+      .then(data =>
+        this.setState({
+          response: data
+        })
+      );
+  }
   render() {
-    const { ProfileData } = this.props.navigation.state.params.ProfileData;
+    // const { ProfileData } = this.props.navigation.state.params.ProfileData;
+    console.log(this.state.response)
     return (
       <View style={styles.container}>
         <View style={styles.header}></View>
@@ -38,26 +55,28 @@ export default class Profile extends Component {
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>
-              {this.props.navigation.state.params.ProfileData["doctor_name"]}
+              {/* {this.props.navigation.state.params.ProfileData["doctor_name"]} */}
+              {this.state.response.doctor_name}
             </Text>
             <Text style={styles.info}>
               {/* {this.props.navigation.getParam("email")} */}
             </Text>
             <Text style={styles.description}>
-              {this.props.navigation.state.params.ProfileData[
+              {/* {this.props.navigation.state.params.ProfileData[
                 "doctor_speciality"
               ] +
                 " " +
-                "Specialist"}
+                "Specialist"} */}
 
-              {/* {this.state.speciality + " " + "Specialist"} */}
+              {this.state.response.doctor_speciality + " " + "Specialist"}
             </Text>
             <View>
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() =>
                   this.props.navigation.navigate("EditProfile", {
-                    ProfileData: this.props.navigation.state.params.ProfileData
+                    // ProfileData: this.props.navigation.state.params.ProfileData
+                    ProfileData: this.state.response
                   })
                 }
               >
@@ -68,8 +87,9 @@ export default class Profile extends Component {
                 style={styles.buttonContainer}
                 onPress={() =>
                   this.props.navigation.navigate("VerifyPassword", {
-                    ProfileData: this.props.navigation.state.params.ProfileData,
-                    password: this.props.navigation.state.params.password
+                    // ProfileData: this.props.navigation.state.params.ProfileData,
+                    // password: this.props.navigation.state.params.password
+                    email : this.state.email
                   })
                 }
               >
@@ -80,9 +100,10 @@ export default class Profile extends Component {
                 style={styles.buttonContainer}
                 onPress={() =>
                   this.props.navigation.navigate("QRScanner", {
-                    email: this.props.navigation.state.params.ProfileData[
-                      "doctor_email"
-                    ]
+                    // email: this.props.navigation.state.params.ProfileData[
+                    //   "doctor_email"
+                    // ]
+                    email : this.state.email
                   })
                 }
                 underlayColor="#00b5ec"

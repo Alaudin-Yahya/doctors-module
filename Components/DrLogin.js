@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Icon } from "react-native-elements";
 import DrProfile from "./DrProfile";
+// import { DrawerNavigator } from 'react-navigation';
 
 import {
   StyleSheet,
@@ -32,7 +33,7 @@ export default class SignUpView extends Component {
     });
   };
   handleSignup = e => {
-    fetch("https://doctors-module.000webhostapp.com/api/doctor-login.php", {
+    fetch("http://instrux.live/doctors_module/api/doctor-login.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // body:  JSON.stringify(data)
@@ -52,10 +53,10 @@ export default class SignUpView extends Component {
     Alert.alert("Alert", "Button pressed " + viewId);
   };
   render() {
-    var response = this.state.response;
+    // var response = this.state.response;
+    console.log(this.state.response)
     return (
       <KeyboardAvoidingView behaviour="position">
-        {this.state.response === "" && (
           <View
             style={styles.container}
             onLayout={event => {
@@ -100,9 +101,9 @@ export default class SignUpView extends Component {
               {/* <Text>You are {this.state.password}</Text> */}
               {/* <Text>You are {this.state.address}</Text> */}
               {/* <Text style={styles.color}>Speciality</Text> */}
-              <Text style={styles.responseText}>
-                {/* {this.state.response["doctor_id"]} */}
-              </Text>
+              {
+                this.state.response === '0' && <Text style={styles.responseText}>Incorrect Email or Password</Text>
+              }
               <TouchableHighlight
                 underlayColor="#00b5ec"
                 style={[styles.buttonContainer, styles.signupButton]}
@@ -139,14 +140,17 @@ export default class SignUpView extends Component {
               <Text>{"\n\n\n\n\n\n\n\n\n"}</Text>
             </View>
           </View>
-        )}
+        
         {this.state.response !== "" &&
-          this.state.response !== "incorrect email or password" &&
+          this.state.response !== "0" &&
           (console.log("runninggggggggggggggggg"),
           this.props.navigation.navigate("DrProfile", {
-            ProfileData: this.state.response,
-            password: this.state.password
-          }))}
+            // ProfileData: this.state.response,
+            // password: this.state.password
+            email: this.state.email
+          }))
+          }
+          
       </KeyboardAvoidingView>
     );
   }

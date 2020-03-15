@@ -496,7 +496,7 @@ export default class SignUpView extends ValidationComponent {
               </View>
             </KeyboardAvoidingView>
           )}
-          {this.state.auth && (
+          {this.state.auth===true && (
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
                 <Icon name="map-marker" type="font-awesome" color="#00b5ec" />
@@ -515,9 +515,15 @@ export default class SignUpView extends ValidationComponent {
               >
                 <Text style={styles.signUpText}>Confirm email</Text>
               </TouchableHighlight>
-              {this.state.message && (
-                <Text style={styles.input}>'Account Created' </Text>
-              )}
+              {this.state.message && //(
+                // <Text style={styles.input}>'Account Created' </Text>
+                this.props.navigation.navigate("DrProfile", {
+                  // ProfileData: this.state.response,
+                  // password: this.state.password
+                  email : this.state.email
+                })
+              // )
+              }
             </View>
           )}
         </View>
