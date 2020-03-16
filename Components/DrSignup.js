@@ -171,7 +171,7 @@ export default class SignUpView extends ValidationComponent {
         auth: true
       });
       //console.log("ywsss")
-      fetch("https://doctors-module.000webhostapp.com/api/doctor-signup.php", {
+      fetch("http://instrux.live/doctors_module/api/doctor-signup.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // body:  JSON.stringify(data)
@@ -213,7 +213,7 @@ export default class SignUpView extends ValidationComponent {
   };
 
   confirmEmail = e => {
-    fetch("https://doctors-module.000webhostapp.com/api/confirm-email.php", {
+    fetch("http://instrux.live/doctors_module/api/confirm-email.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // body:  JSON.stringify(data)
@@ -234,7 +234,7 @@ export default class SignUpView extends ValidationComponent {
     Alert.alert("Alert", "Button pressed " + viewId);
   };
   saveLocation = () => {
-    fetch("https://doctors-module.000webhostapp.com/api/location.php", {
+    fetch("http://instrux.live/doctors_module/api/location.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // body:  JSON.stringify(data)

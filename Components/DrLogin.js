@@ -112,7 +112,7 @@ export default class SignUpView extends Component {
                 <Text style={styles.signUpText}>Login</Text>
               </TouchableHighlight>
               <Text
-                onPress={() => this.props.navigation.navigate("ForgetPassword")}
+                onPress={() => this.props.navigation.navigate("VerifyEmail")}
                 style={{
                   color: "#00b5ec",
                   fontSize: 15,

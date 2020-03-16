@@ -25,7 +25,7 @@ class ConfirmPasswordCode extends Component {
   };
   confirmCode = e => {
     fetch(
-      "https://doctors-module.000webhostapp.com/api/verify-code-forget-password.php",
+      "http://instrux.live/doctors_module/api/verify-code-forget-password.php",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

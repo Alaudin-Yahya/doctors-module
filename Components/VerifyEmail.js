@@ -27,7 +27,7 @@ class VerifyEmail extends ValidationComponent {
     });
     if (validateEmail) {
       fetch(
-        "https://doctors-module.000webhostapp.com/api/verify-email-forget-password.php",
+        "http://instrux.live/doctors_module/api/verify-email-forget-password.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -44,6 +44,7 @@ class VerifyEmail extends ValidationComponent {
             auth: true,
             msg: data
           })
+          //console.log(data)
         )
 
         .then(
@@ -58,7 +59,7 @@ class VerifyEmail extends ValidationComponent {
   };
 
   render() {
-    console.log("in Verify mail")
+    console.log("in Verify mail"+this.state.responseForEmail)
     return (
       <View>
         {this.state.responseForEmail === "0" && (
@@ -99,7 +100,7 @@ class VerifyEmail extends ValidationComponent {
             </View>
           </KeyboardAvoidingView>
         )}
-        {this.state.responseForEmail === "1" && (
+        {this.state.responseForEmail !== "0" && (
           // <ConfirmPasswordCode email={this.state.email} />
           this.props.navigation.navigate('ConfirmPasswordCode', {
             // data: data 

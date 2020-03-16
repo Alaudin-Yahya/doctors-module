@@ -36,7 +36,7 @@ class NewPassword extends ValidationComponent {
       /////yaad rkhna change krna hai :P
       if (this.state.password === this.state.c_password) {
         fetch(
-          "https://doctors-module.000webhostapp.com/api/update-password.php",
+          "http://instrux.live/doctors_module/api/update-password.php",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
