@@ -76,7 +76,7 @@ export default class SignupScreen extends Component {
   };
 
   sendAuthenticationCode = () => {
-    alert("bhejdia");
+    // alert("bhejdia");
     fetch("http://instrux.live/doctors_module/api/doctor-signup.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

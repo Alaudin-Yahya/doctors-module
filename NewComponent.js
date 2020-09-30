@@ -95,7 +95,7 @@ class Mapss extends React.Component {
 
   async getDirections(startLoc, desLoc) {
     try {
-      const resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=`)
+      const resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=AIzaSyDsiklq7PTRl2li_bfN2qtWQksch4xVXdE`)
       const respJson = await resp.json();
       const response = respJson.routes[0]
       const distanceTime = response.legs[0]

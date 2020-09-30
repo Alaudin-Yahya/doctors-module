@@ -169,7 +169,7 @@ export default class WebView extends Component {
               borderWidth: 1,
               height: 40,
             }}
-            onPress={() => this.props.navigation.navigate("WebViewQRScanner")}
+            onPress={() => this.props.navigation.navigate("WebViewQRScanner", {email: this.props.route.params.email})}
           >
             <LinearGradient
               style={{

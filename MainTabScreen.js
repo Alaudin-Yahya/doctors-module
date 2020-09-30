@@ -28,7 +28,7 @@ export default MainTabScree = (props) => {
         name="HomeScreen"
         component={HomeScreen}
         initialParams={{ email: props.route.params.email }}
-        email= {props.route.params.email}
+        // email= {props.route.params.email}
         options={{
           tabBarLabel: "Home",
           tabBarColor: "#00b5ec",
@@ -65,6 +65,8 @@ export default MainTabScree = (props) => {
         name="WebView"
         initialParams={{ data: "" }}
         component={WebView}
+        initialParams={{ data:" " ,email: props.route.params.email }}
+        
         options={{
           tabBarLabel: "Web View",
           tabBarColor: "#00b5ec",

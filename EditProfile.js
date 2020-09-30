@@ -94,16 +94,55 @@ export default EditProfile = ({ navigation }) => {
 };
 
 class EditProfile extends Component {
-  state = {
-    name: "",
-    address: "",
-    speciality: "",
-    phone: "",
-    result:
-      "https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg",
-  };
-
+  constructor(props){
+    super(props);
+ 
+    this.state = {
+      name: "",
+      address: "",
+      speciality: "",
+      phone: "", response : null,
+      result:
+        "https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg",
+    };
+    }
+ 
+  
+  componentDidMount(){
+    fetch("http://instrux.live/doctors_module/api/profile.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body:  JSON.stringify(data)
+      body: JSON.stringify({
+        email: 'syedyahya314@gmail.com',
+        
+      }),
+    }).then(response => response.json())
+        .then(data =>
+          this.setState({
+            response: data
+          })
+        )
+  }
+  updateProfile = () => {
+    fetch("http://instrux.live/doctors_module/api/edit-profile.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body:  JSON.stringify(data)
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        // password: this.state.password,
+        // timing: this.state.availability,
+        address: this.state.address,
+        phone: this.state.phone,
+        // speciality: this.state.speciality,
+      }),
+    }).then((response) => response.text());
+    
+  }
   render() {
+    console.log("edit profile", this.state.response)
     const abc = this.state.showMainSubMenu;
     const pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -167,7 +206,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder="Your Name"
+                  placeholder="name"
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(name) => this.setState({ name })}
@@ -270,6 +309,7 @@ class EditProfile extends Component {
                 <LinearGradient
                   style={styles.signIn}
                   colors={["#00b5ec", "#009398"]}
+                  // onPress={}
                 >
                   <Text style={(styles.textSign, { color: "#fff" })}>
                     Update Profile

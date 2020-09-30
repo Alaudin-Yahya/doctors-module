@@ -59,5 +59,5 @@ function App() {
     </NavigationContainer>
   );
 }
-
+console.disableYellowBox = true;
 export default App;

@@ -22,6 +22,28 @@ class WebViewQRScanner extends Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
+    fetch("http://instrux.live/doctors_module/api/scanned-qr.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body:  JSON.stringify(data)
+      body: JSON.stringify({
+        code: data,
+        email: this.props.route.params.email,
+        // location: this.state.location
+      }),
+    })
+      .then((response) => response.text())
+      .then((data) =>
+        this.setState({
+          response: data,
+        })
+      )
+      .then(
+        console.log(
+          this.state.response,
+          "response of data submission thrugh scanned qr"
+        )
+      );
     // Do something here
     console.log(data);
     // alert(data);

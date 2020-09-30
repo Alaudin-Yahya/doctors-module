@@ -31,7 +31,7 @@ export function DrawerContent(props, { navigation }) {
             }}
             size={50}
           />
-          <Title style={styles.title}>Dawid Urbaniak</Title>
+          <Title style={styles.title}>Alaudin Yahya</Title>
           <Caption style={styles.caption}>{props.email}</Caption>
           <View style={styles.row}>
             <View style={styles.section}>

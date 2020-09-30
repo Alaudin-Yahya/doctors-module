@@ -148,8 +148,11 @@ class Settings extends Component {
           </View>
           {this.state.showMainSubMenu ? (
             <Animatable.View style={styles.SettingsSubMenu} animation="fadeIn">
+              {console.log('Steeings', this.props.route.params.email)}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("EditProfile")}
+                onPress={() => this.props.navigation.navigate("EditProfile", {
+                  email: this.props.route.params.email,
+                })}
               >
                 <View style={styles.SettingsSubMenuItem}>
                   <Icon
