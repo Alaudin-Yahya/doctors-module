@@ -14,13 +14,29 @@ import Screen2 from "./Screens/Screen2";
 
 const Drawer = createDrawerNavigator();
 class DrawerComp extends Component {
-  state = {response:null, email:''};
+  state = {response:null, email:'', data:''};
+  componentDidMount(){
+    fetch("http://instrux.live/doctors_module/api/profile.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body:  JSON.stringify(data)
+      body: JSON.stringify({
+        email: this.props.route.params.email,
+        
+      }),
+    }).then(response => response.json())
+        .then(data =>
+          this.setState({
+            data: data
+          })
+        )
+  }
   render() {
-    console.log(this.state.response, "at drawer comp");
+    console.log(this.state.data.doctor_name, "at drawer comp");
     return (
       <Drawer.Navigator
         drawerContent={(props) => (
-          <DrawerContent {...props} email={this.props.route.params.email} />
+          <DrawerContent {...props} email={this.props.route.params.email} data={this.state.data}/>
         )}
         activeBackgroundColor="#00b5ec"
       > 

@@ -31,7 +31,7 @@ export function DrawerContent(props, { navigation }) {
             }}
             size={50}
           />
-          <Title style={styles.title}>Alaudin Yahya</Title>
+          <Title style={styles.title}>{props.data.doctor_name}</Title>
           <Caption style={styles.caption}>{props.email}</Caption>
           <View style={styles.row}>
             <View style={styles.section}>
@@ -131,7 +131,7 @@ export function DrawerContent(props, { navigation }) {
             label="Settings"
             labelStyle={{ color: "#05375a", fontSize: 12, padding: 0 }}
             onPress={() => {
-              props.navigation.navigate("Settings",{email:props.email});
+              props.navigation.navigate("Settings",{email:props.email, data:props.data});
             }}
           />
         </Drawer.Section>

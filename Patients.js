@@ -62,7 +62,7 @@ export default PatientStackScreen = ({ navigation }) => {
                   fontSize: 10,
                 }}
               >
-                9
+                3
               </Text>
               <Icon name="bell" type="font-awesome" size={22} color="#fff" />
             </TouchableOpacity>

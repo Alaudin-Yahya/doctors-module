@@ -84,7 +84,7 @@ export default EditProfile = (props, {navigation} ) => {
                   fontSize: 10,
                 }}
               >
-                9
+                3
               </Text>
               <Icon name="bell" type="font-awesome" size={22} color="#fff" />
             </TouchableOpacity>
@@ -95,6 +95,7 @@ export default EditProfile = (props, {navigation} ) => {
       <EditProfileStack.Screen name="Edit Profile" component={EditProfile} 
       initialParams={{
         email: props.route.params.email,
+        data:  props.route.params.data
       }}
       />
     </EditProfileStack.Navigator>
@@ -112,24 +113,24 @@ class EditProfile extends Component {
         "https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg",
     }
   
-  componentDidMount(){
-    fetch("http://instrux.live/doctors_module/api/profile.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // body:  JSON.stringify(data)
-      body: JSON.stringify({
-        email: this.props.route.params.email,
+  // componentDidMount(){
+  //   fetch("http://instrux.live/doctors_module/api/profile.php", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     // body:  JSON.stringify(data)
+  //     body: JSON.stringify({
+  //       email: this.props.route.params.email,
         
-      }),
-    }).then(response => response.json())
-        .then(data =>
-          this.setState({
-            previousName: data.doctor_name,
-            previousPhone: data.doctor_phone,
-            previousAddress: data.doctor_address
-          })
-        )
-  }
+  //     }),
+  //   }).then(response => response.json())
+  //       .then(data =>
+  //         this.setState({
+  //           previousName: data.doctor_name,
+  //           previousPhone: data.doctor_phone,
+  //           previousAddress: data.doctor_address
+  //         })
+  //       )
+  // }
   updateProfile = () => {
     console.log('updating')
     fetch("http://instrux.live/doctors_module/api/edit-profile.php", {
@@ -151,12 +152,26 @@ class EditProfile extends Component {
         updateResult: data
       })
     )
+    this.props.navigation.navigate('Settings', {email:this.props.route.params.email})
+    alert("Profile Updated!");
+    this.setState({
+      name: "",
+      address: "",
+      phone: ""})
+  }
+  profileUpdated=()=>{
+    // alert("Profile Updated!")
+    this.props.navigation.navigate('Settings', {email:this.props.route.params.email})
+    // this.setState({
+    // name: "",
+    // address: "",
+    // phone: ""})
   }
   render() {
-    console.log("edit profile", this.props.route.params.email)
-    if (this.state.updateResult===1){
-      alert("Profile Updated!")
-    }
+    console.log("edit profile", this.props.route.params.data.doctor_name)
+    // if (this.state.updateResult===1){
+    //   alert("Profile Updated!")
+    // }
     const abc = this.state.showMainSubMenu;
     const pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -220,7 +235,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder={this.state.previousName}
+                  placeholder={ this.props.route.params.data.doctor_name}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(name) => this.setState({ name })}
@@ -248,7 +263,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder={this.state.previousPhone}
+                  placeholder={this.props.route.params.data.doctor_phone}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(phone) => this.setState({ phone })}
@@ -275,7 +290,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder={this.state.previousAddress}
+                  placeholder={this.props.route.params.data.doctor_address}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(address) => this.setState({ address })}
@@ -349,6 +364,7 @@ class EditProfile extends Component {
                 </LinearGradient>
                 </TouchableOpacity>
               </View>
+              {this.state.updateResult ===1 ? this.profileUpdated: <Text></Text>}
             </Animatable.View>
           </View>
       </KeyboardAvoidingView>

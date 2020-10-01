@@ -37,7 +37,7 @@ export default class ForgotPassword extends Component {
       errorMessageEmail = "Email is invalid";
     }
     if (errorMessageEmail === "") {
-      alert("asdasdasdasdas");
+      // alert("asdasdasdasdas");
       fetch(
         "http://instrux.live/doctors_module/api/verify-email-forget-password.php",
         {
@@ -152,7 +152,7 @@ export default class ForgotPassword extends Component {
                     </Text>
                   </View>
                 )}
-                <Text>{typeof this.state.responseForVerifyEmail}</Text>
+                {/* <Text>{typeof this.state.responseForVerifyEmail}</Text> */}
                 {this.state.errorMessageEmail === "" ? null : (
                   <View style={{ flex: 1, flexDirection: "row", marginTop: 2 }}>
                     <Icon

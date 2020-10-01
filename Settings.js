@@ -84,6 +84,7 @@ export default SettingsStackScreen = (props, { navigation }) => {
         component={Settings}
         initialParams={{
           email: props.route.params.email,
+          data: props.route.params.data
         }}
         screenOptions={{
           headerTitle: () => <Header />,
@@ -153,6 +154,7 @@ class Settings extends Component {
                 onPress={() =>
                   this.props.navigation.navigate("EditProfile", {
                     email: this.props.route.params.email,
+                    data: this.props.route.params.data
                   })
                 }
               >
