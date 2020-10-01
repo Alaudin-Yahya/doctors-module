@@ -38,7 +38,11 @@ export default ChangePassword = (props, { navigation }) => {
           textAlign: "center",
         },
         headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() =>
+            props.navigation.navigate("Settings", {
+              email: props.route.params.email,
+            })
+          }>
             <View style={{ position: "relative" }}>
               <Icon
                 style={{ paddingLeft: 10 }}

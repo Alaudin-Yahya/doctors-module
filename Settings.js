@@ -22,7 +22,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import {DrawerComp} from './Drawer';
 import {Home} from './Home';
 import { createStackNavigator } from "@react-navigation/stack";
-
+import * as RootNavigation from './RootNavigation';
 const SettingsStack = createStackNavigator();
 export default SettingsStackScreen = (props, { navigation }) => {
   return (
@@ -150,9 +150,11 @@ class Settings extends Component {
             <Animatable.View style={styles.SettingsSubMenu} animation="fadeIn">
               {console.log('Steeings', this.props.route.params.email)}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("EditProfile", {
-                  email: this.props.route.params.email,
-                })}
+                onPress={() =>
+                  this.props.navigation.navigate("EditProfile", {
+                    email: this.props.route.params.email,
+                  })
+                }
               >
                 <View style={styles.SettingsSubMenuItem}>
                   <Icon

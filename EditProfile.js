@@ -26,7 +26,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const EditProfileStack = createStackNavigator();
-export default EditProfile = ({ navigation }) => {
+export default EditProfile = (props, {navigation} ) => {
   return (
     <EditProfileStack.Navigator
       initialRouteName=""
@@ -49,7 +49,11 @@ export default EditProfile = ({ navigation }) => {
               width: 40,
             }}
           >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() =>
+                  props.navigation.navigate("Settings", {
+                    email: props.route.params.email,
+                  })
+                }>
               <Icon
                 name="chevron-left"
                 type="feather"
@@ -88,25 +92,25 @@ export default EditProfile = ({ navigation }) => {
         ),
       }}
     >
-      <EditProfileStack.Screen name="Edit Profile" component={EditProfile} />
+      <EditProfileStack.Screen name="Edit Profile" component={EditProfile} 
+      initialParams={{
+        email: props.route.params.email,
+      }}
+      />
     </EditProfileStack.Navigator>
   );
 };
 
 class EditProfile extends Component {
-  constructor(props){
-    super(props);
- 
-    this.state = {
+  
+    state = {
       name: "",
       address: "",
       speciality: "",
-      phone: "", response : null,
+      phone: "", response : null, updateResult:null, previousName:'', previousPhone:'', previousAddress:'', 
       result:
         "https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg",
-    };
     }
- 
   
   componentDidMount(){
     fetch("http://instrux.live/doctors_module/api/profile.php", {
@@ -114,35 +118,45 @@ class EditProfile extends Component {
       headers: { "Content-Type": "application/json" },
       // body:  JSON.stringify(data)
       body: JSON.stringify({
-        email: 'syedyahya314@gmail.com',
+        email: this.props.route.params.email,
         
       }),
     }).then(response => response.json())
         .then(data =>
           this.setState({
-            response: data
+            previousName: data.doctor_name,
+            previousPhone: data.doctor_phone,
+            previousAddress: data.doctor_address
           })
         )
   }
   updateProfile = () => {
+    console.log('updating')
     fetch("http://instrux.live/doctors_module/api/edit-profile.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // body:  JSON.stringify(data)
       body: JSON.stringify({
         name: this.state.name,
-        email: this.state.email,
+        email: this.props.route.params.email,
         // password: this.state.password,
         // timing: this.state.availability,
         address: this.state.address,
         phone: this.state.phone,
         // speciality: this.state.speciality,
       }),
-    }).then((response) => response.text());
-    
+    }).then(response => response.json())
+    .then(data =>
+      this.setState({
+        updateResult: data
+      })
+    )
   }
   render() {
-    console.log("edit profile", this.state.response)
+    console.log("edit profile", this.props.route.params.email)
+    if (this.state.updateResult===1){
+      alert("Profile Updated!")
+    }
     const abc = this.state.showMainSubMenu;
     const pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -206,7 +220,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder="name"
+                  placeholder={this.state.previousName}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(name) => this.setState({ name })}
@@ -234,7 +248,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder="Your Phone"
+                  placeholder={this.state.previousPhone}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(phone) => this.setState({ phone })}
@@ -261,7 +275,7 @@ class EditProfile extends Component {
                   size={16}
                 />
                 <TextInput
-                  placeholder="Your Address"
+                  placeholder={this.state.previousAddress}
                   autoCapitalize="none"
                   style={styles.textInput}
                   onChangeText={(address) => this.setState({ address })}
@@ -306,15 +320,34 @@ class EditProfile extends Component {
               </View> */}
 
               <View style={styles.button}>
+              <TouchableOpacity
+                    style={styles.signIn}
+                    style={
+                      (styles.signIn,
+                      {
+                        width: "70%",
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 10,
+                        borderColor: "#00b5ec",
+                        marginTop: 10,
+                        borderWidth: 1,
+                        height: 40,
+                      })
+                    }
+                    onPress={() => this.updateProfile()}
+                  >
                 <LinearGradient
                   style={styles.signIn}
                   colors={["#00b5ec", "#009398"]}
-                  // onPress={}
+                  onPress={() => this.updateProfile()}
                 >
                   <Text style={(styles.textSign, { color: "#fff" })}>
                     Update Profile
                   </Text>
                 </LinearGradient>
+                </TouchableOpacity>
               </View>
             </Animatable.View>
           </View>
@@ -403,7 +436,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   signIn: {
-    width: "80%",
+    width: "100%",
     height: 40,
     justifyContent: "center",
     alignItems: "center",
